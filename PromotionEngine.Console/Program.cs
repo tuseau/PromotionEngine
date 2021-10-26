@@ -50,12 +50,13 @@ namespace PromotionEngine.Client
                     var line = reader.ReadLine();
                     var values = line.Split(',');
 
-                    order.Items.Add(new Item 
-                    { 
-                        Sku = new Sku 
-                        { 
-                            ID = values[0], Price = int.Parse(values[1]) 
-                        } 
+                    order.Items.Add(new Item
+                    {
+                        Sku = new Sku
+                        {
+                            ID = values[0],
+                            Price = int.Parse(values[1])
+                        }
                     });
                 }
             }
