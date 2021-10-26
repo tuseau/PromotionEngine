@@ -521,5 +521,38 @@ namespace Tests
             // assert
             Assert.Equal(expectedOrderTotal, result.OrderTotal);
         }
+
+        [Fact]
+        public void Promo4()
+        {
+            // arrange
+            var order = new Order()
+            {
+                Items = new List<Item>
+                {
+                    new Item{ Sku = new Sku { ID = "A", Price = 50 } },
+                    new Item{ Sku = new Sku { ID = "B", Price = 30 } },
+                    new Item{ Sku = new Sku { ID = "C", Price = 20 } },
+                    new Item{ Sku = new Sku { ID = "D", Price = 15 } }
+                }
+            };
+
+            var activePromos = new List<IPromotion>()
+            {
+                new Promo4()
+            };
+
+            var promoEngine = new PromotionEngine.PromotionEngine(activePromos);
+
+            // act
+            var result = promoEngine.ApplyPromotions(order);
+
+            // assert
+            Assert.Equal(55, result.OrderTotal);
+            Assert.Equal(new Promo4().Name, result.Items[0].AppliedPromotion);
+            Assert.Null(result.Items[1].AppliedPromotion);
+            Assert.Equal(new Promo4().Name, result.Items[2].AppliedPromotion);
+            Assert.Null(result.Items[3].AppliedPromotion);
+        }
     }
 }
